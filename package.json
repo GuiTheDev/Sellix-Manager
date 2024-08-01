@@ -1,0 +1,25 @@
+{
+  "name": "sellixbot",
+  "version": "0.0.1",
+  "description": "discord bot that interacts with sellix with commands, made to be used by the seller on the sellix account",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "sellix",
+    "sells"
+  ],
+  "author": "GuiTheDev",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^9.8.0"
+  },
+  "dependencies": {
+    "datejs": "^1.0.0-rc3",
+    "discord.js": "^14.15.3",
+    "undici": "^6.19.4"
+  }
+}
