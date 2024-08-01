@@ -83,9 +83,9 @@ module.exports = {
         const response = await forthereq.body.json()
 
         if (response.status == 200) {
-            await interaction.reply({ content: `Changed product price with id **${uniqueid}** to **${price}$**`, ephemeral: true})
+            await interaction.reply({ content: `✅ Changed product price with id **${uniqueid}** to **${price}$**`, ephemeral: true})
         } else {
-            await interaction.reply({ content: `Something failed, check api key, uniqueid or contact bot developer!, error: ${response.error}`,ephemeral: true})
+            await interaction.reply({ content: `❌ Something failed, check api key, uniqueid or contact bot developer!, error: ${response.error}`,ephemeral: true})
         }
         
     },

@@ -87,16 +87,16 @@ module.exports = {
                 .setURL('https://dashboard.sellix.io/products')
                 .setFooter({ text: 'Sellix Bot', iconURL: 'https://s3-eu-west-1.amazonaws.com/tpd/logos/5f038a919ab82900015059fc/0x0.png'})
                 .addFields(
-                    { name: 'Product UID', value: product.uniqid.toString()},
-                    { name: 'Price Displayed', value: product.price_display.toString(), inline:true},
-                    { name: 'Actual Price', value: product.price.toString(), inline:true},
-                    { name: 'Stock', value: stocknumber.toString()}
+                    { name: '🆔  Product UID', value: product.uniqid.toString()},
+                    { name: '🏷️  Price Displayed', value: product.price_display.toString(), inline:true},
+                    { name: '💰  Actual Price', value: product.price.toString(), inline:true},
+                    { name: '🚛  Stock', value: stocknumber.toString()}
 
                 )
             
             await interaction.reply({ embeds:[responseEmbed] , ephemeral: true})
         } else {
-            await interaction.reply({ content: 'Something failed, check api key, uniqueid or contact bot developer!',ephemeral: true})
+            await interaction.reply({ content: '❌ Something failed, check api key, uniqueid or contact bot developer!',ephemeral: true})
         }
         
     },

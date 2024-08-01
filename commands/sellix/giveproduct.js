@@ -134,17 +134,17 @@ module.exports = {
                             await interaction.editReply(`✅ Serial retrieved; **${getserialresponse.data.order.serials[0]}**`)
                             
                         } else {
-                            await interaction.editReply({ content: `Something failed, check api key, uniqueid or contact bot developer!, error: ${getserialresponse.error}`,ephemeral: true})
+                            await interaction.editReply({ content: `❌ Something failed, check api key, uniqueid or contact bot developer!, error: ${getserialresponse.error}`,ephemeral: true})
                         }
                         
 
                     } else {
-                        await interaction.editReply({ content: `Something failed, check api key, uniqueid or contact bot developer!, error: ${completepayresponse.error}`,ephemeral: true})
+                        await interaction.editReply({ content: `❌ Something failed, check api key, uniqueid or contact bot developer!, error: ${completepayresponse.error}`,ephemeral: true})
                         
                     }
 
                 } else {
-                    await interaction.editReply({ content: `Something failed, check api key, uniqueid or contact bot developer!, error: ${createpayment.error}`,ephemeral: true})
+                    await interaction.editReply({ content: `❌ Something failed, check api key, uniqueid or contact bot developer!, error: ${createpayment.error}`,ephemeral: true})
                 }
 
 
@@ -152,10 +152,10 @@ module.exports = {
 
 
             } else {
-                await interaction.reply({ content: `That is not a SERIAL type product`,ephemeral: true})
+                await interaction.reply({ content: `❌ That is not a SERIAL type product`,ephemeral: true})
             }
         } else {
-            await interaction.reply({ content: `Something failed, check api key, uniqueid or contact bot developer!, error: ${response.error}`,ephemeral: true})
+            await interaction.reply({ content: `❌ Something failed, check api key, uniqueid or contact bot developer!, error: ${response.error}`,ephemeral: true})
         }
         
     },

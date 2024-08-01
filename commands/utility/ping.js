@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder} = require('discord.js');
 
 
 module.exports = {
@@ -7,6 +7,6 @@ module.exports = {
         .setDescription('Replies with pong!'),
 
     async execute(interaction) {
-        await interaction.reply("Pong!")
+        await interaction.reply(`🏓 Pong! Latency is ${Date.now() - interaction.createdTimestamp}ms.`)
     },
 };

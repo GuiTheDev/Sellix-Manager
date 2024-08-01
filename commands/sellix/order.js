@@ -94,7 +94,7 @@ module.exports = {
             
             await interaction.reply({ embeds:[responseEmbed] , ephemeral: true})
         } else {
-            await interaction.reply({ content: 'Something failed, check api key, uniqueid or contact bot developer!',ephemeral: true})
+            await interaction.reply({ content: '❌ Something failed, check api key, uniqueid or contact bot developer!',ephemeral: true})
         }
         
     },

@@ -96,18 +96,18 @@ module.exports = {
                 .setURL('https://dashboard.sellix.io/coupons')
                 .setFooter({ text: 'Sellix Bot', iconURL: 'https://s3-eu-west-1.amazonaws.com/tpd/logos/5f038a919ab82900015059fc/0x0.png'})
                 .addFields(
-                    { name: 'Coupon UID', value: coupon.uniqid.toString()},
-                    { name: '💰  Discount', value: coupon.discount.toString() + '$'},
-                    { name: 'Products bound', value: couponarray.toString()},
-                    { name: 'Used', value: coupon.used.toString()},
-                    { name: 'Max uses', value: maxuses.toString()},
+                    { name: '🆔  Coupon UID', value: coupon.uniqid.toString()},
+                    { name: '🏷️  Discount', value: coupon.discount.toString() + '$'},
+                    { name: '📎  Products bound', value: couponarray.toString()},
+                    { name: '✔️  Used', value: coupon.used.toString()},
+                    { name: '🚫  Max uses', value: maxuses.toString()},
                     { name: '🕒  Created at', value: date.toDateString()}
 
                 )
             
             await interaction.reply({ embeds:[responseEmbed] , ephemeral: true})
         } else {
-            await interaction.reply({ content: `Something failed, check api key, uniqueid or contact bot developer!, error ${general.error}`,ephemeral: true})
+            await interaction.reply({ content: `❌ Something failed, check api key, uniqueid or contact bot developer!, error ${general.error}`,ephemeral: true})
         }
         
     },
