@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { request } = require('undici');
-const { sellixapi } = require('../../config.json')
+const { sellixapi, embedephemeral } = require('../../config.json')
 
 
 
@@ -94,7 +94,7 @@ module.exports = {
 
                 )
             
-            await interaction.reply({ embeds:[responseEmbed] , ephemeral: true})
+            await interaction.reply({ embeds:[responseEmbed] , ephemeral: embedephemeral})
         } else {
             await interaction.reply({ content: '❌ Something failed, check api key, uniqueid or contact bot developer!',ephemeral: true})
         }

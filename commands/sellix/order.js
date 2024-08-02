@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { request } = require('undici');
-const { sellixapi } = require('../../config.json')
+const { sellixapi, embedephemeral } = require('../../config.json')
 
 
 
@@ -34,22 +34,21 @@ module.exports = {
             const response = await forthereq.body.json()
             if (response.status != 200) return console.error("CANT GET API KEY, CHECK API KEY")
             const orders = response.data.orders
+            let choices = []
             
             orders.forEach((order, i) => {
                 ordersobject[order.uniqid] = order.uniqid
+                choices.push(order.uniqid)
             })
-            let choices = []
             
-            for (const key in ordersobject) {
-                const choice = {
-                    name: key,
-                }
-                choices.push(choice)
-            }
-           
+
+
+            const filt = choices
+                .filter(choice => choice.startsWith(focusedvalue))
+                .slice(0, 25)
             
             await interaction.respond(
-                choices.map((choice => ({name: choice.name, value: choice.name})))
+                filt.map((choice => ({name: choice, value: choice})))
             )
         },
 
@@ -92,7 +91,7 @@ module.exports = {
 
                 )
             
-            await interaction.reply({ embeds:[responseEmbed] , ephemeral: true})
+            await interaction.reply({ embeds:[responseEmbed] , ephemeral: embedephemeral})
         } else {
             await interaction.reply({ content: '❌ Something failed, check api key, uniqueid or contact bot developer!',ephemeral: true})
         }
