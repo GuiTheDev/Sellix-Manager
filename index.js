@@ -90,7 +90,7 @@ client.on(Events.InteractionCreate, async interaction => {
 	try {
 		const sellixapi = await sellixkey.get(interaction.guild.id)
 		let embedephemeral = await ephemeral.get(interaction.guild.id)
-		if (sellixapi == undefined && command.data.name != 'setapikey') return await interaction.reply({ content: '❌ You have to set your sellix api key first!', ephemeral: true })
+		if (sellixapi == undefined && command.data.name != 'setapikey' && command.data.name != 'setrole') return await interaction.reply({ content: '❌ You have to set your sellix api key first!', ephemeral: true })
 		if (embedephemeral == undefined) { embedephemeral = true}
 		await command.execute(interaction, sellixapi, sellixkey, embedephemeral, ephemeral, role);
 	} catch (error) {

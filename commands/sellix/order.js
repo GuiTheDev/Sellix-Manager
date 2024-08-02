@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { request } = require('undici');
-const { embedephemeral } = require('../../config.json')
+
 
 
 
@@ -20,7 +20,7 @@ module.exports = {
         ),
 
 
-        async autocomplete(interaction, sellixapi) {
+        async autocomplete(interaction, sellixapi, sellixkey, embedephemeral,) {
             const focusedvalue = interaction.options.getFocused();
     
             const forthereq = await request(`https://dev.sellix.io/v1/orders`, {
