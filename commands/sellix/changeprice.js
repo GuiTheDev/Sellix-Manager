@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { request } = require('undici');
-const { sellixapi } = require('../../config.json')
 
 
 
@@ -24,7 +23,7 @@ module.exports = {
 
         
 
-    async autocomplete(interaction, client) {
+    async autocomplete(interaction, sellixapi) {
         const focusedvalue = interaction.options.getFocused();
 
         const forthereq = await request(`https://dev.sellix.io/v1/products`, {
@@ -62,7 +61,7 @@ module.exports = {
         )
     },
 
-    async execute(interaction) {
+    async execute(interaction, sellixapi) {
         const uniqueid = interaction.options.getString('uid')
         const price = interaction.options.getNumber('newprice')
 

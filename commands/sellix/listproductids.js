@@ -8,7 +8,7 @@ module.exports = {
         .setName('listproductids')
         .setDescription('Get the UIDS to all products'),
 
-    async execute(interaction) {
+    async execute(interaction, sellixapi, sellixkey, embedephemeral,) {
         const forthereq = await request(`https://dev.sellix.io/v1/products`, {
             method: 'GET',
             headers: {
@@ -34,6 +34,6 @@ module.exports = {
         
 
 
-        await interaction.reply({ embeds: [responseEmbed],ephemeral: true})
+        await interaction.reply({ embeds: [responseEmbed],ephemeral: embedephemeral})
     },
 };

@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ComponentType} = require('discord.js');
 const { request } = require('undici');
-const { sellixapi } = require('../../config.json')
 
 
 module.exports = {
@@ -43,7 +42,7 @@ module.exports = {
         ),
 
 
-    async execute(interaction) {
+    async execute(interaction,sellixapi) {
         const dateregex = /[0-9]{4}-[0-9]{2}-[0-9]{2}\s[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{1,3})?/i;
         const code = interaction.options.getString('code')
         const discount_type = interaction.options.getString('discount_type')
@@ -147,7 +146,6 @@ module.exports = {
     
     
             if (response.status == 200) {
-                console.log("a")
                 await interaction.followUp({ content: `✅ Created coupon **${code}**, with UID **${response.data.uniqid}** successfully`, ephemeral: true})
             } else if(response.status == 400) {
                 await interaction.followUp({ content: `❌ Something failed, error: **${response.error}**`,ephemeral: true})

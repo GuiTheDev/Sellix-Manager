@@ -1,9 +1,12 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const Keyv = require('keyv');
+const { Client, Collection, Events, GatewayIntentBits, PermissionsBitField } = require('discord.js');
+const { token } = require('./config.json');
 
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
-const { request } = require('undici');
-const { token, sellixapi, roleID} = require('./config.json');
+const sellixkey = new Keyv('sqlite://db/db.sqlite', { namespace: 'sellixkey'})
+const ephemeral = new Keyv('sqlite://db/db.sqlite', { namespace: 'ephemeral'})
+const role = new Keyv('sqlite://db/db.sqlite', { namespace: 'role'})
 
 const client = new Client({intents: [GatewayIntentBits.Guilds]});
 
@@ -31,6 +34,7 @@ client.on(Events.InteractionCreate, async interaction => {
 
 	if (interaction.isAutocomplete()) {
 		const command = client.commands.get(interaction.commandName);
+		
 	
 		if (!command) return console.log('Command was not found');
 	
@@ -38,11 +42,23 @@ client.on(Events.InteractionCreate, async interaction => {
 		  return console.error(
 			`No autocomplete handler was found for the ${interaction.commandName} command.`,
 		  );
-	
+
+		if (!interaction.member.roles.cache.has(await role.get(interaction.guild.id))) return
 		try {
-		  await command.autocomplete(interaction);
+			const sellixapi = await sellixkey.get(interaction.guild.id)
+			if (sellixapi == undefined) throw "apinotset"
+
+
+		  await command.autocomplete(interaction, sellixapi);
 		} catch (error) {
-		  console.error(error);
+			if(error == 'apinotset') {
+				const user = interaction.guild.members.cache.get(interaction.member.id)
+				user.send("Your api key is not set, please set it using /setapikey on your server")
+			} else {
+				console.error(error);
+			}
+			
+		  
 		}
 	  }
 
@@ -57,12 +73,26 @@ client.on(Events.InteractionCreate, async interaction => {
 		return;
 	}
 
-	if (!interaction.member.roles.cache.has(roleID)) return await interaction.reply({content: "❌ You do not have permissions to execute this command", ephemeral:true})
 
+	if (!interaction.member.roles.cache.has(await role.get(interaction.guild.id)) && command.data.name != 'setrole') {
+		await interaction.reply({content: "❌ You do not have permissions to execute this command", ephemeral:true})
+		return
+	}
+
+
+	if (command.data.name == 'setrole' && !interaction.member.permissions.has([PermissionsBitField.Flags.Administrator])) {
+		await interaction.reply({content: "❌ You do not have permissions to execute this command", ephemeral:true})
+		return
+	}
 	
-
+	
+	
 	try {
-		await command.execute(interaction);
+		const sellixapi = await sellixkey.get(interaction.guild.id)
+		let embedephemeral = await ephemeral.get(interaction.guild.id)
+		if (sellixapi == undefined && command.data.name != 'setapikey') return await interaction.reply({ content: '❌ You have to set your sellix api key first!', ephemeral: true })
+		if (embedephemeral == undefined) { embedephemeral = true}
+		await command.execute(interaction, sellixapi, sellixkey, embedephemeral, ephemeral, role);
 	} catch (error) {
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {

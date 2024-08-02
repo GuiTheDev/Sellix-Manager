@@ -18,8 +18,10 @@
     "eslint": "^9.8.0"
   },
   "dependencies": {
+    "@keyv/sqlite": "^3.6.7",
     "datejs": "^1.0.0-rc3",
     "discord.js": "^14.15.3",
+    "keyv": "^4.5.4",
     "undici": "^6.19.4"
   }
 }
