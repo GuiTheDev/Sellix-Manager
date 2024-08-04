@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { request } = require('undici');
 
 
@@ -66,7 +66,7 @@ module.exports = {
         )
     },
 
-    async execute(interaction,sellixapi) {
+    async execute(interaction, sellixapi, sellixkey, embedephemeral) {
      
 
         const uniqueid = interaction.options.getString('uid')
@@ -128,8 +128,23 @@ module.exports = {
                         getserialresponse = await getserial.body.json()
                         
                         if(getserialresponse.status == 200) {
-                            await interaction.editReply(`✅ Serial retrieved; **${getserialresponse.data.order.serials[0]}**`)
+                            const responseEmbed = new EmbedBuilder()
+                                .setColor([148,0,211])
+                                .setTitle('Product Provided')
+                                .setURL('https://dashboard.sellix.io/products')
+                                .setFooter({ text: 'Sellix Bot', iconURL: 'https://s3-eu-west-1.amazonaws.com/tpd/logos/5f038a919ab82900015059fc/0x0.png'})
+                                .addFields(
+                                    { name: '🆔  Product: ', value: response.data.product.title},
+                                    { name: '🏷️  Given amount', value: '1'},
+                                    { name: '💰  Remaining stock', value: (response.data.product.stock-1).toString()},
+                                )
+
+
+
+                            await interaction.editReply({content: `✅ Serial retrieved; **${getserialresponse.data.order.serials[0]}**`,embeds:[responseEmbed] , ephemeral: embedephemeral})
                             
+        
+
                         } else {
                             await interaction.editReply({ content: `❌ Something failed, check api key, uniqueid or contact bot developer!, error: ${getserialresponse.error}`,ephemeral: true})
                         }

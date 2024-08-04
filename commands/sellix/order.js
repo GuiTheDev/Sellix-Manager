@@ -75,7 +75,7 @@ module.exports = {
             var timestamp_created = order.created_at
             var date = new Date(timestamp_created * 1000);
             const responseEmbed = new EmbedBuilder()
-                .setColor(0x0099FF)
+                .setColor([148,0,211])
                 .setTitle("Order Details")
                 .setDescription(`UID: ${uniqueid}`)
                 .setImage(`https://imagedelivery.net/95QNzrEeP7RU5l5WdbyrKw/${order.product.image_attachment.cloudflare_image_id}/default`)

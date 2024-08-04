@@ -6,6 +6,7 @@ const { token } = require('./config.json');
 
 const sellixkey = new Keyv('sqlite://db/db.sqlite', { namespace: 'sellixkey'})
 const ephemeral = new Keyv('sqlite://db/db.sqlite', { namespace: 'ephemeral'})
+const storedomain = new Keyv('sqlite://db/db.sqlite', { namespace: 'storedomain'})
 const role = new Keyv('sqlite://db/db.sqlite', { namespace: 'role'})
 
 const client = new Client({intents: [GatewayIntentBits.Guilds]});
@@ -90,9 +91,11 @@ client.on(Events.InteractionCreate, async interaction => {
 	try {
 		const sellixapi = await sellixkey.get(interaction.guild.id)
 		let embedephemeral = await ephemeral.get(interaction.guild.id)
+		let storedomaistring = await storedomain.get(interaction.guild.id)
 		if (sellixapi == undefined && command.data.name != 'setapikey' && command.data.name != 'setrole') return await interaction.reply({ content: '❌ You have to set your sellix api key first!', ephemeral: true })
 		if (embedephemeral == undefined) { embedephemeral = true}
-		await command.execute(interaction, sellixapi, sellixkey, embedephemeral, ephemeral, role);
+		if (command.data.name == 'pay' && storedomaistring == undefined) return await interaction.reply({ content: '❌ To run this command first set your store domain with /setstoredomain', ephemeral: true })
+		await command.execute(interaction, sellixapi, sellixkey, embedephemeral, ephemeral, role, storedomain, storedomaistring);
 	} catch (error) {
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {

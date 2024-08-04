@@ -63,13 +63,13 @@ module.exports = {
         )
     },
 
-    async execute(interaction,sellixapi) {
+    async execute(interaction, sellixapi, sellixkey, embedephemeral, ephemeral, role, storedomain, storedomaistring) {
         const slug = interaction.options.getString('slug')
         const coupon = interaction.options.getString('coupon')
         if (coupon !=null) {
-            await interaction.reply({ content: `✅ Here is the link **https://epicmomentsuper.mysellix.io/product/${slug}?couponCode=${coupon}&step=0**`,ephemeral: false})
+            await interaction.reply({ content: `✅ Here is the link **https://${storedomaistring}/product/${slug}?couponCode=${coupon}&step=0**`,ephemeral: false})
         } else {
-            await interaction.reply({ content: `✅ Here is the link **https://epicmomentsuper.mysellix.io/product/${slug}?step=0**`,ephemeral: false})
+            await interaction.reply({ content: `✅ Here is the link **https://${storedomaistring}/product/${slug}?step=0**`,ephemeral: false})
         }
         
         

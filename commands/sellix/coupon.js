@@ -90,7 +90,7 @@ module.exports = {
             var timestamp_created = coupon.created_at
             var date = new Date(timestamp_created * 1000);
             const responseEmbed = new EmbedBuilder()
-                .setColor(0x0099FF)
+                .setColor([148,0,211])
                 .setTitle(coupon.code)
                 .setDescription(coupon.coupon_type)
                 .setURL('https://dashboard.sellix.io/coupons')

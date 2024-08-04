@@ -81,7 +81,7 @@ module.exports = {
         
             
             const responseEmbed = new EmbedBuilder()
-                .setColor(0x0099FF)
+                .setColor([148,0,211])
                 .setTitle(product.title)
                 .setDescription(product.description)
                 .setURL('https://dashboard.sellix.io/products')

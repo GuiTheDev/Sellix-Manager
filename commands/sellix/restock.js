@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ModalBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle} = require('discord.js');
+const { SlashCommandBuilder, ModalBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle, EmbedBuilder} = require('discord.js');
 const { request } = require('undici');
 
 
@@ -58,7 +58,7 @@ module.exports = {
         )
     },
 
-    async execute(interaction, sellixapi) {
+    async execute(interaction, sellixapi, sellixkey, embedephemeral) {
         const uniqueid = interaction.options.getString('uid')
         
 
@@ -118,7 +118,18 @@ module.exports = {
                 const addstockresponse = await addstock.body.json()
 
                 if (addstockresponse.status == 200) {
-                    await interaction.reply({ content: `✅ Added Stock successfully`, ephemeral: true})
+                    const responseEmbed = new EmbedBuilder()
+                        .setColor([148,0,211])
+                        .setTitle("Product's stock")
+                        .setURL('https://dashboard.sellix.io/products')
+                        .setFooter({ text: 'Sellix Bot', iconURL: 'https://s3-eu-west-1.amazonaws.com/tpd/logos/5f038a919ab82900015059fc/0x0.png'})
+                        .addFields(
+                            { name: '🆔  Product Name:', value: product.title},
+                            { name: '🚛  Stock:', value: (product.stock+stockarrayin.length).toString()},
+                            { name: '❗   Click here to view in store', value: 'https://dashboard.sellix.io/products'},
+                        )
+                await interaction.reply({ content: '✅ Added stock!', embeds:[responseEmbed], ephemeral: embedephemeral})
+
                 } else {
                     await interaction.reply({ content: `❌ Something failed, check api key, uniqueid or contact bot developer! error: ${addstockresponse.error}`,ephemeral: true})
                 }
